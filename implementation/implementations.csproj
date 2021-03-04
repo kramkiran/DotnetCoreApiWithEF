@@ -5,7 +5,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\interfaces\interfaces.csproj" />
+    <Reference Include="interfaces">
+      <HintPath>..\ExternalDLLs\interfaces.dll</HintPath>
+    </Reference>
   </ItemGroup>
+
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="xcopy /y $(TargetPath) $(SolutionDir)ExternalDLLs\" />
+  </Target>
 
 </Project>

@@ -13,7 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\implementation\implementations.csproj" />
+    <Reference Include="implementations">
+      <HintPath>..\ExternalDLLs\implementations.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
