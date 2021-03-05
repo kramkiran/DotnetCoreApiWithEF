@@ -57,7 +57,7 @@ namespace DotnetCoreApiWithEF.Models
 
         object getEmpData(int empid);
 
-        object updateEmpData(empData obj);
+        object updateEmpData(empDetails obj);
     }
     public class employee : IEmployee
     {
@@ -113,7 +113,7 @@ namespace DotnetCoreApiWithEF.Models
             return empObj2;
         }
 
-        public object updateEmpData(empData obj)
+        public object updateEmpData(empDetails obj)
         {
             var empObj = emplist.Find(a=>a.empId==obj.empId);
             if (empObj != null)
