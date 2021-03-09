@@ -110,6 +110,10 @@ namespace DotnetCoreApiWithEF.Models
                                       gender = b.gender,
                                       city = b.city
                                   }).FirstOrDefault();
+
+            
+                     
+
             return empObj2;
         }
 
@@ -129,6 +133,9 @@ namespace DotnetCoreApiWithEF.Models
                                       empDeptName =m.emp1.dept.deptName, 
                                       empAddressVal=m.empAddrs.employeeAddress1
                                   }).FirstOrDefault();
+
+                
+
             }
             return empObj;
         }

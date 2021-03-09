@@ -16,6 +16,9 @@
     <Reference Include="implementations">
       <HintPath>..\ExternalDLLs\implementations.dll</HintPath>
     </Reference>
+    <Reference Include="interfaces">
+      <HintPath>..\ExternalDLLs\interfaces.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
