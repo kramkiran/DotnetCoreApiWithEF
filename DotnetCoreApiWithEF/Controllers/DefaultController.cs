@@ -48,9 +48,15 @@ namespace DotnetCoreApiWithEF.Controllers
 
         [Route("{empId}/getUserDetails")]
         [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(empDetails))]
+        [ProducesResponseType(StatusCodes.Status404NotFound)]
         public object GetUserDetails(int empId)
         {
-            return _IEmployee.getEmpData(empId);
+            empDetails objdata= _IEmployee.getEmpData(empId) as empDetails;
+            if (objdata == null)
+                return NotFound();
+            else
+                return Ok(objdata);
         }
 
         [Route("updateData")]
@@ -58,6 +64,16 @@ namespace DotnetCoreApiWithEF.Controllers
         public object UpdateUserDetails([FromBody]empDetails objData)
         {
             return _IEmployee.updateEmpData(objData);
+        }
+
+        [HttpGet]
+        [Route("getResponse")]
+        public IActionResult getResponse(int val)
+        {
+            if(val==1)
+            return BadRequest(new {status=StatusCodes.Status400BadRequest, message = "Somethig went wrong" });
+            else
+            return Ok(new { status=StatusCodes.Status200OK,message="success"});
         }
 
         [HttpGet]
