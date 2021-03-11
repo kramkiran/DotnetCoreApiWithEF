@@ -21,10 +21,21 @@ namespace DotnetCoreApiWithEF
             Configuration = configuration;
         }
         public IConfiguration Configuration { get; }
+
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy(MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200/").AllowAnyOrigin().AllowAnyHeader()
+                                .AllowAnyMethod(); ;
+                });
+            });
             services.AddTransient<IEmployee, employee>();
 
             services.AddTransient<Func<string, interfaceType>>((provider) => {
@@ -36,9 +47,6 @@ namespace DotnetCoreApiWithEF
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-
-           
-
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,8 +56,11 @@ namespace DotnetCoreApiWithEF
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors(MyAllowSpecificOrigins);
             app.UseMvc();
-      
+           
+
             //app.Run(async (context) =>
             //{
             //    await context.Response.WriteAsync("Hello World!");

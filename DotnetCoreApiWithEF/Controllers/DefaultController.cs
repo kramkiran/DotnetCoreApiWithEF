@@ -35,14 +35,24 @@ namespace DotnetCoreApiWithEF.Controllers
         [HttpGet]
         public bool checkUser(int empId)
         {
-            return _IEmployee.userExists(empId);
+            if (!_IEmployee.userExists(empId)) {
+                return false;
+            }
+            return true; 
         }
 
         [Route("{empId}/getUserName")]
         [HttpGet]
-        public string GetUserName(int empId)
+        public object GetUserName(int empId)
         {
-            return _IEmployee.getEmployeeName(empId);
+            string result = _IEmployee.getEmployeeName(empId);
+            if (string.IsNullOrEmpty(result))
+            {
+                return NotFound(new { status = StatusCodes.Status404NotFound, data =string.Empty, message = "User Not Exists" });
+            }
+
+            return Ok(new { status = StatusCodes.Status200OK, data = result, message = "User Exists" });
+            
         }
 
 
@@ -57,6 +67,24 @@ namespace DotnetCoreApiWithEF.Controllers
                 return NotFound();
             else
                 return Ok(objdata);
+        }
+
+        [Route("postData")]
+        [HttpPost]
+        public object postDetails([FromBody]sampleModel objData,[FromQuery]string objVal)
+        {
+
+            string name = "modified";
+            if (objData != null && (objVal==name))
+            {
+                objData.name = name;
+                return Ok(objData);
+            }
+            else
+            {
+                return BadRequest(objData);
+            }
+
         }
 
         [Route("updateData")]
@@ -86,6 +114,16 @@ namespace DotnetCoreApiWithEF.Controllers
 
             var obj = _InterfaceType2("defval", 12);
             a = obj.getStringvalue();
+        }
+
+        [HttpGet,Route("getAllDetails")]
+        public object getAllDetails()
+        {
+            List<empData> emplist = new List<empData>() { new empData { empId = 100, empName = "ganesh", city = "A"},
+                                                      new empData { empId = 101, empName = "siva", city = "B" },
+                                                      new empData { empId = 102, empName = "kumar", city = "C" },
+                                                      new empData { empId = 103, empName = "lakshmi", city = "D"}};
+            return Ok(emplist);
         }
 
     }

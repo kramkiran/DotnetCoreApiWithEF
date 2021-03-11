@@ -5,6 +5,11 @@ using System.Threading.Tasks;
 
 namespace DotnetCoreApiWithEF.Models
 {
+    public class sampleModel {
+
+        public string name { get; set; }
+        public string city { get; set; }
+    }
     public class empData
     {
         public int empId { get; set; }
