@@ -123,8 +123,31 @@ namespace DotnetCoreApiWithEF.Controllers
                                                       new empData { empId = 101, empName = "siva", city = "B" },
                                                       new empData { empId = 102, empName = "kumar", city = "C" },
                                                       new empData { empId = 103, empName = "lakshmi", city = "D"}};
+            List<one> data = new List<one>();
+            //data.Add(new one() {id=1, name="A"});
+            //data.Add(new one() { id = 2, name = "B" });
+            //data.Add(new one() { id = 3, name = "C" });
+            invokeMethod(data);
             return Ok(emplist);
         }
 
-    }
+        public void invokeMethod(List<one> obj)
+        {
+            //if(obj.Count >0){
+            var op = obj.Where(_ => !string.IsNullOrEmpty(_.name) && _.name.ToLower().Contains("a")).FirstOrDefault();
+            if (op!=null)
+            {
+                Console.WriteLine(op.id + "  " + op.name);
+            }
+            //}
+            Console.WriteLine("Completed");
+        }
+
+        public class one
+        {
+            public int id { get; set; }
+            public string name { get; set; }
+        }
+
+        }
 }

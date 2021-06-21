@@ -11,6 +11,8 @@ using Microsoft.Extensions.DependencyInjection;
 using interfaces;
 using implementations;
 using Microsoft.Extensions.Configuration;
+using Microsoft.EntityFrameworkCore;
+using EntityLib;
 
 namespace DotnetCoreApiWithEF
 {
@@ -33,7 +35,7 @@ namespace DotnetCoreApiWithEF
                 builder =>
                 {
                     builder.WithOrigins("http://localhost:4200/").AllowAnyOrigin().AllowAnyHeader()
-                                .AllowAnyMethod(); ;
+                                .AllowAnyMethod(); 
                 });
             });
             services.AddTransient<IEmployee, employee>();
@@ -41,10 +43,12 @@ namespace DotnetCoreApiWithEF
             services.AddTransient<Func<string, interfaceType>>((provider) => {
                 return new Func<string, interfaceType>((targetString) => new implement(targetString));
                 });
-
+            
             services.AddTransient<Func<string,int, interfaceType>>((provider) => {
                 return new Func<string,int, interfaceType>((targetString,tragetInt) => new implement(targetString, tragetInt));
             });
+            //var a = Configuration.GetConnectionString("TestConnection");
+            services.AddDbContext<EFDbContext>(item => item.UseSqlServer(Configuration.GetConnectionString("TestConnection")));
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }

@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk.Web">
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
@@ -13,12 +13,21 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="EntityLib">
+      <HintPath>..\ExternalDLLs\EntityLib.dll</HintPath>
+    </Reference>
     <Reference Include="implementations">
       <HintPath>..\ExternalDLLs\implementations.dll</HintPath>
     </Reference>
     <Reference Include="interfaces">
       <HintPath>..\ExternalDLLs\interfaces.dll</HintPath>
     </Reference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="appsettings.json">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>
